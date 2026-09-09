@@ -1,0 +1,8 @@
+'use client';
+import {useEffect,useState} from 'react';
+import type {Entity} from '@/lib/editorial/model';
+export function Game({game}:{game:Entity}){
+const [answer,A]=useState<number|null>(null),[cards,C]=useState<{value:string,id:number}[]>([]),[open,O]=useState<number[]>([]),[matched,M]=useState<number[]>([]);
+useEffect(()=>{A(null);O([]);M([]);const arr=game.options.flatMap((value,i)=>[{value,id:i*2},{value,id:i*2+1}]);for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}C(arr)},[game]);
+useEffect(()=>{if(open.length!==2)return;const [a,b]=open;if(cards[a]?.value===cards[b]?.value){M(prev=>[...prev,a,b]);O([])}else{const timer=setTimeout(()=>O([]),1000);return()=>clearTimeout(timer)}},[open,cards]);
+return <div className="game"><h3>{game.title}</h3><p>{game.description}</p>{game.gameType==='quiz'?<><div className="answers">{game.options.map((v,i)=><button key={i} disabled={answer!==null} className={answer===i?'selected':''} onClick={()=>A(i)}>{v}</button>)}</div>{answer!==null&&<p role="status"><b>{answer===game.correct?'¡Bien visto! ':'Otra perspectiva: '}</b>{game.explanation}</p>}</>:<><div className="memory-grid">{cards.map((c,i)=><button key={c.id} disabled={matched.includes(i)||open.includes(i)||open.length===2} onClick={()=>O([...open,i])} aria-label={open.includes(i)||matched.includes(i)?c.value:'Voltear tarjeta '+(i+1)}>{open.includes(i)||matched.includes(i)?c.value:'♡'}</button>)}</div><p role="status">{matched.length===cards.length&&cards.length?game.explanation:`${matched.length/2} de ${cards.length/2} pares`}</p></>}</div>}
