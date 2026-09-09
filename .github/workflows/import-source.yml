@@ -1,0 +1,46 @@
+name: Import verified HeForShe source
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/import-source.yml']
+permissions:
+  contents: write
+jobs:
+  import:
+    if: github.actor == 'abrilvillita'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - name: Verify and import the prepared source
+        shell: python
+        run: |
+          import hashlib, pathlib, zipfile
+          root = pathlib.Path.cwd().resolve()
+          archive = root / 'source-bundle.zip'
+          expected = '56fe02b4fc5a1ac4ad74c2a708032748f380ff3bd48b03c1bb3f547fda432b9d'
+          assert hashlib.sha256(archive.read_bytes()).hexdigest() == expected, 'Archive hash mismatch'
+          with zipfile.ZipFile(archive) as z:
+              assert len(z.infolist()) < 500
+              assert sum(i.file_size for i in z.infolist()) < 10_000_000
+              for info in z.infolist():
+                  target = (root / info.filename).resolve()
+                  assert target.is_relative_to(root) and '.git' not in target.relative_to(root).parts
+                  assert not info.filename.startswith(('.github/', '.env', '.dev.vars'))
+                  if info.is_dir():
+                      target.mkdir(parents=True, exist_ok=True)
+                  else:
+                      target.parent.mkdir(parents=True, exist_ok=True)
+                      target.write_bytes(z.read(info))
+          assert (root / 'components/editorial/journal.tsx').is_file()
+          assert (root / 'worker/index.ts').is_file()
+          assert (root / 'tests/security.test.ts').is_file()
+          archive.unlink()
+          (root / '.github/workflows/import-source.yml').unlink()
+      - name: Save the imported project
+        run: |
+          git config user.name 'Abril Miranda Villa Márquez'
+          git config user.email '229368311+abrilvillita@users.noreply.github.com'
+          git add -A
+          git commit -m 'Import complete HeForShe editorial studio, Worker API and security tests'
+          git push origin HEAD:main
