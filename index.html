@@ -1,1 +1,331 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Entre nos · HeForShe Laguna</title>
+  <style>
+    :root {
+      --rosa: #a82f69;
+      --verde: #244d3e;
+      --crema: #fffaf5;
+      --texto: #24352e;
+    }
 
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--crema);
+      color: var(--texto);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    a { color: inherit; }
+    img { max-width: 100%; }
+    .contenedor { width: min(1180px, 92%); margin: auto; }
+
+    header {
+      background: #fff;
+      border-bottom: 1px solid #eadfe4;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 72px;
+    }
+    .marca {
+      color: var(--rosa);
+      font-size: 1.4rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .menu { display: flex; flex-wrap: wrap; gap: 18px; }
+    .menu a { text-decoration: none; font-weight: 600; }
+    .menu a:hover { color: var(--rosa); }
+
+    .portada {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 55px;
+      padding: 76px 0;
+    }
+    .etiqueta {
+      color: var(--rosa);
+      font-size: .85rem;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 15px 0;
+      font-family: Georgia, serif;
+      font-size: clamp(4rem, 10vw, 8rem);
+      line-height: .9;
+      letter-spacing: -.06em;
+    }
+    .portada p {
+      max-width: 530px;
+      font-size: 1.18rem;
+      line-height: 1.7;
+    }
+    .boton {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 13px 20px;
+      border-radius: 999px;
+      background: var(--rosa);
+      color: #fff;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .foto-formal img {
+      display: block;
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      border-radius: 22px;
+      box-shadow: 0 18px 35px #4d173023;
+    }
+    .foto-formal figcaption {
+      margin-top: 13px;
+      color: var(--rosa);
+      font-weight: 800;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    section { padding: 75px 0; }
+    .intro { background: #f8edf2; }
+    h2 {
+      margin: 8px 0 20px;
+      font-family: Georgia, serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      line-height: 1.1;
+    }
+    .intro p, .mesa > .contenedor > p {
+      max-width: 760px;
+      font-size: 1.08rem;
+      line-height: 1.7;
+    }
+    .categorias {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 25px;
+    }
+    .categorias span {
+      padding: 9px 14px;
+      border: 1px solid #ddb9c8;
+      border-radius: 999px;
+      background: #fff;
+      color: var(--rosa);
+      font-weight: 700;
+    }
+
+    .foto-grupo {
+      display: block;
+      width: 100%;
+      max-height: 520px;
+      margin: 38px 0 45px;
+      object-fit: cover;
+      border-radius: 24px;
+    }
+    .personas {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .persona {
+      padding: 25px 15px;
+      border: 1px solid #f0e5e7;
+      border-radius: 22px;
+      background: #fff;
+      text-align: center;
+      box-shadow: 0 9px 24px #2c47300d;
+    }
+    .persona img {
+      display: block;
+      width: 145px;
+      height: 145px;
+      margin: 0 auto 18px;
+      border: 5px solid #f5dce7;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 32%;
+    }
+    .persona:nth-child(even) img { border-color: #dcecdf; }
+    .cargo {
+      margin: 0 0 8px;
+      color: var(--rosa);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .persona h3 {
+      min-height: 2.6em;
+      margin: 0 0 17px;
+      font-size: 1.05rem;
+      line-height: 1.3;
+    }
+    .redes {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 7px;
+    }
+    .redes a {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #edf5ef;
+      color: var(--verde);
+      font-size: .84rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .redes a:hover { background: #d9eadd; }
+
+    footer {
+      padding: 35px 0;
+      background: var(--verde);
+      color: #fff;
+      text-align: center;
+    }
+    footer a { color: #fff; }
+
+    @media (max-width: 1000px) {
+      .personas { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 700px) {
+      nav, .portada { display: block; }
+      nav { padding: 18px 0; }
+      .menu { margin-top: 15px; }
+      .portada { padding: 50px 0; }
+      .foto-formal { margin: 38px 0 0; }
+      .personas { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 420px) {
+      .personas { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="contenedor" aria-label="Navegación principal">
+      <a class="marca" href="#inicio">HeForShe · Entre nos</a>
+      <div class="menu">
+        <a href="#sobre-nosotras">Sobre nosotras</a>
+        <a href="#mesa-directiva">Mesa directiva</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="contenedor portada" id="inicio">
+      <div>
+        <div class="etiqueta">Tecmilenio Campus Laguna</div>
+        <h1>Entre nos.</h1>
+        <p>Un espacio para compartir historias, ideas y eventos que nos acercan a una comunidad más igualitaria.</p>
+        <a class="boton" href="#mesa-directiva">Conoce al equipo ↗</a>
+      </div>
+      <figure class="foto-formal">
+        <img
+          src="https://raw.githubusercontent.com/abrilvillita/heforshe-campus/main/public/team/grupo-formal.jpg"
+          alt="Fotografía formal de la mesa directiva de HeForShe Laguna">
+        <figcaption>Mesa Directiva Generación 2026</figcaption>
+      </figure>
+    </div>
+
+    <section class="intro" id="sobre-nosotras">
+      <div class="contenedor">
+        <div class="etiqueta">Nuestra comunidad</div>
+        <h2>Historias que merecen un espacio.</h2>
+        <p>Entre nos reunirá publicaciones, noticias y eventos de HeForShe Laguna. Queremos compartir logros de mujeres de nuestra comunidad, entrevistas, información útil y fechas que vale la pena recordar y conmemorar.</p>
+        <p>Este espacio está en desarrollo. Más adelante incluirá un calendario de eventos y nuevas formas de mantener a la comunidad informada.</p>
+        <div class="categorias" aria-label="Temas">
+          <span>Académico</span>
+          <span>Deporte</span>
+          <span>Salud</span>
+          <span>Emprendimiento</span>
+          <span>Eventos</span>
+          <span>Comunidad</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="mesa" id="mesa-directiva">
+      <div class="contenedor">
+        <div class="etiqueta">El equipo detrás de este espacio</div>
+        <h2>Conoce a nuestra mesa directiva</h2>
+        <p>Somos cinco estudiantes que impulsamos ideas, eventos y conversaciones para nuestra comunidad.</p>
+
+        <img
+          class="foto-grupo"
+          src="https://raw.githubusercontent.com/abrilvillita/heforshe-campus/main/public/team/grupo-amarillo.jpg"
+          alt="Integrantes de HeForShe Laguna juntas durante una actividad">
+
+        <div class="personas">
+          <article class="persona">
+            <img src="https://raw.githubusercontent.com/abrilvillita/heforshe-campus/main/public/team/camila-ugarte.jpg" alt="Camila Ugarte Alarcón">
+            <p class="cargo">Presidenta</p>
+            <h3>Camila Ugarte Alarcón</h3>
+            <div class="redes">
+              <a href="https://www.instagram.com/cam.ug_/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+            </div>
+          </article>
+
+          <article class="persona">
+            <img src="https://raw.githubusercontent.com/abrilvillita/heforshe-campus/main/public/team/abril-miranda.jpg" alt="Abril Miranda Villa Márquez">
+            <p class="cargo">Vicepresidenta</p>
+            <h3>Abril Miranda Villa Márquez</h3>
+            <div class="redes">
+              <a href="https://www.instagram.com/abril_vill4/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+              <a href="https://github.com/abrilvillita" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+              <a href="https://www.linkedin.com/in/abrilmirandavilla/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+              <a href="https://abrilvilla.dev/" target="_blank" rel="noopener noreferrer">Portafolio ↗</a>
+            </div>
+          </article>
+
+          <article class="persona">
+            <img src="https://raw.githubusercontent.com/abrilvillita/heforshe-campus/main/public/team/camila-navarro.jpg" alt="Camila Navarro Landeros">
+            <p class="cargo">Eventos</p>
+            <h3>Camila Navarro Landeros</h3>
+            <div class="redes">
+              <a href="https://www.instagram.com/camnavarro_/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+            </div>
+          </article>
+
+          <article class="persona">
+            <img src="https://raw.githubusercontent.com/abrilvillita/heforshe-campus/main/public/team/mia-pineda.jpg" alt="Mia Ivana Pineda Briones">
+            <p class="cargo">Redes</p>
+            <h3>Mia Ivana Pineda Briones</h3>
+            <div class="redes">
+              <a href="https://www.instagram.com/artistfortune_fa/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+            </div>
+          </article>
+
+          <article class="persona">
+            <img src="https://raw.githubusercontent.com/abrilvillita/heforshe-campus/main/public/team/frida-casas.jpg" alt="Frida Nahomi Casas Perez">
+            <p class="cargo">Tesorería</p>
+            <h3>Frida Nahomi Casas Perez</h3>
+            <div class="redes">
+              <a href="https://www.instagram.com/fridacssp/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="contenedor">
+      <p>HeForShe Laguna · Entre nos</p>
+      <small>Página creada por Abril Miranda Villa Márquez</small>
+    </div>
+  </footer>
+</body>
+</html>
